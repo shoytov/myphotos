@@ -60,7 +60,7 @@ class Album(db.Document):
     slug = db.StringField(verbose_name='Slug альбома')
     created = db.DateTimeField(default=datetime.now, verbose_name='Дата и время создания')
     description = db.StringField(verbose_name='Описание альбома')
-    photos = db.ListField(db.EmbeddedDocumentField(Photo), verbose_name='Фотографии')
+    photos = db.SortedListField(db.EmbeddedDocumentField(Photo), verbose_name='Фотографии')
     
     def save(self):
         self.slug = slugify(self.name, to_lower=True)

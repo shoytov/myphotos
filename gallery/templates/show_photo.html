@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <section class="container">
+            <a href="/album/{{ photo.name }}/">{{ photo.name }}</a>
+            {{ photo.photos.created | my_strftime }}
+            {{ photo.photos.device }}
+            <img src="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/max/" width="100%">
+            <a href="/delete-photo/{{ photo._id }}/{{ photo.photos.file }}/" onclick="return confirm('Точно удалить фотографию?');">Удалить</a>
+        </section>
+    </div>
+{% endblock %}

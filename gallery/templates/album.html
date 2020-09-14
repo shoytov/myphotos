@@ -30,12 +30,16 @@
 
         <div class="container-fluid">
             <section class="container">
-                <div class="gallery">
-                    {% for photo in album.photos %}
-                        <a href="#"> <figure class="picture" data-title="{{ photo.created | my_strftime }}" data-url="/get-photo-min/{{ album.id }}/{{ photo.file }}"></figure></a>
-                    {% endfor %}
-                    <br style="clear: both;">
-                </div>
+                {% if album.photos | length > 0 %}
+                    <div class="gallery">
+                        {% for photo in album.photos %}
+                            <a href="/show-photo/{{ album.id }}/{{ photo.file }}/">
+                                <figure class="picture" data-title="{{ photo.created | my_strftime }}" data-url="/get-photo/{{ album.id }}/{{ photo.file }}/min/"></figure>
+                            </a>
+                        {% endfor %}
+                        <br style="clear: both;">
+                    </div>
+                {% endif %}
             </section>
         </div>
     </section>

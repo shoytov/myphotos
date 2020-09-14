@@ -7,14 +7,16 @@
 		<h1>Фотопоток</h1>
 
         <section class="container">
-            <div class="gallery">
-                {% for photo in photos %}
-                    <a href="/get-photo-min/{{ photo._id }}/{{ photo.photos.file }}/">
-                        <figure class="picture glightbox2" data-title="{{ photo.photos.created | my_strftime }}" data-url="/get-photo-min/{{ photo._id }}/{{ photo.photos.file }}/"></figure>
-                    </a>
-                {% endfor %}
-                <br style="clear: both;">
-            </div>
+            {% if photos | length > 0 %}
+                <div class="gallery">
+                    {% for photo in photos %}
+                        <a href="/show-photo/{{ photo._id }}/{{ photo.photos.file }}/">
+                            <figure class="picture glightbox2" data-title="{{ photo.photos.created | my_strftime }}" data-url="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/min/"></figure>
+                        </a>
+                    {% endfor %}
+                    <br style="clear: both;">
+                </div>
+            {% endif %}
         </section>
 
     </div>

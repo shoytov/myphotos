@@ -10,6 +10,8 @@ from gallery.services.upload_photos import UploadPhotos
 from gallery.services.get_photo_file import GetPhotoFile
 from gallery.services.delete_album import DeleteAlbum
 from gallery.services.photo_stream import PhotoStream
+from gallery.services.show_photo import ShowPhoto
+from gallery.services.delete_photo import DeletePhoto
 from .forms import LoginForm, AddAlbumForm, AddPhotosForm
 
 gallery = Blueprint('gallery', __name__, template_folder='templates')
@@ -25,8 +27,7 @@ def index():
 		return render_template('login.html', form=form)
 	else:
 		photos = PhotoStream.stream()
-		for photo in photos:
-			print(photo)
+
 		return render_template('gallery.html', photos=photos)
 	
 	
@@ -99,15 +100,15 @@ def upload_photos():
 	return redirect('/album/{}/'.format(request.form.get('slug')))
 
 
-@gallery.route('/get-photo-min/<album_id>/<filename>/')
-def get_photo_min(album_id: str, filename: str):
+@gallery.route('/get-photo/<album_id>/<filename>/<file_type>/')
+def get_photo(album_id: str, filename: str, file_type: str='min'):
 	"""
 	вывод файла фотографии
 	"""
 	if not CheckUserLogin.check():
 		return
 	
-	file = GetPhotoFile(album_id, filename, 'min')
+	file = GetPhotoFile(album_id, filename, file_type)
 	return file.get()
 
 
@@ -122,3 +123,29 @@ def delete_album(album_id: str):
 	deleted = DeleteAlbum(album_id)
 	deleted.delete()
 	return redirect('/albums/')
+
+
+@gallery.route('/show-photo/<album_id>/<file>/')
+def show_photo(album_id: str, file: str):
+	"""
+	вывод оригинала фотографии
+	"""
+	if not CheckUserLogin.check():
+		return redirect('/')
+	
+	res = ShowPhoto(album_id, file)
+	photo = res.show()
+	return render_template('show_photo.html', photo=photo)
+
+
+@gallery.route('/delete-photo/<album_id>/<file>/')
+def delete_photo(album_id: str, file: str):
+	"""
+	удаление фотографии
+	"""
+	if not CheckUserLogin.check():
+		return redirect('/')
+	
+	deleted = DeletePhoto(album_id, file)
+	album_slug = deleted.delete()
+	return redirect('/album/{}'.format(album_slug))
