@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="gallery">
+
+	<div class="container-fluid">
+		<h1>Фотопоток</h1>
+
+        <section class="container">
+            <div class="gallery">
+                {% for photo in photos %}
+                    <a href="/get-photo-min/{{ photo._id }}/{{ photo.photos.file }}/">
+                        <figure class="picture glightbox2" data-title="{{ photo.photos.created | my_strftime }}" data-url="/get-photo-min/{{ photo._id }}/{{ photo.photos.file }}/"></figure>
+                    </a>
+                {% endfor %}
+                <br style="clear: both;">
+            </div>
+        </section>
+
+    </div>
+
+</section>
+
+{% endblock %}

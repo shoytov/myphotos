@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section>
+        <div class="container-fluid">
+            <h1>{{ album.name }} ({{ album.photos | length }})</h1>
+
+            <a href="/delete-album/{{ album.id }}/" onclick="return confirm('Точно удалить альбом со всеми фотографиями?');">
+                удалить альбом
+            </a>
+
+            <p>{{ album.description }}</p>
+
+            <form id="add-album" method="post" action="/upload-photos/" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                {% for element in form %}
+                    {% if element.widget.input_type != 'hidden' %}
+                        <p>
+                            {{ element(placeholder=element.description, class_="form-control mb-3") }}
+                        </p>
+                    {% endif %}
+                {% endfor %}
+
+                <input type="submit" class="btn btn-primary" value="Добавить">
+            </form>
+        </div>
+
+        <hr>
+
+        <div class="container-fluid">
+            <section class="container">
+                <div class="gallery">
+                    {% for photo in album.photos %}
+                        <a href="#"> <figure class="picture" data-title="{{ photo.created | my_strftime }}" data-url="/get-photo-min/{{ album.id }}/{{ photo.file }}"></figure></a>
+                    {% endfor %}
+                    <br style="clear: both;">
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock %}

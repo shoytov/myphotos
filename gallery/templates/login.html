@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section >
+        <div class="container-fluid">
+            <form id="login_form" method="post" action="/login/">
+                {{ form.hidden_tag() }}
+
+                {% for element in form %}
+                    {% if element.widget.input_type != 'hidden' %}
+                        <p>
+                            {{ element(placeholder=element.description, class_="form-control mb-3") }}
+                        </p>
+                    {% endif %}
+                {% endfor %}
+
+                <input type="submit" class="btn btn-primary" value="Войти">
+            </form>
+            <div id="error_message">{{ message }}</div>
+        </div>
+    </section>
+{% endblock %}

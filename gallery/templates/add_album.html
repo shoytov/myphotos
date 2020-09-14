@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section>
+        <div class="container-fluid">
+            <h1>Создание альбома</h1>
+            <form id="add-album" method="post" action="/add-album/">
+                {{ form.hidden_tag() }}
+
+                {% for element in form %}
+                    {% if element.widget.input_type != 'hidden' %}
+                        <p>
+                            {{ element(placeholder=element.description, class_="form-control mb-3") }}
+                        </p>
+                    {% endif %}
+                {% endfor %}
+
+                <input type="submit" class="btn btn-primary" value="Добавить">
+            </form>
+        </div>
+    </section>
+{% endblock %}

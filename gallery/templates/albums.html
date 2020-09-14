@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section>
+        <div class="container-fluid">
+            <a href="/add-album/" class="btn-primary">Добавить альбом</a>
+        </div>
+
+        <hr>
+
+        <div class="container-fluid">
+            <div class="row">
+            {% for album in albums %}
+                <a href="/album/{{ album.slug }}/">
+                    {{ album.name }} ({{ album.created | my_strftime }})
+                </a> &nbsp;
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
