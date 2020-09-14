@@ -134,8 +134,9 @@ def show_photo(album_id: str, file: str):
 		return redirect('/')
 	
 	res = ShowPhoto(album_id, file)
-	photo = res.show()
-	return render_template('show_photo.html', photo=photo)
+	photo, photo_prev, photo_next = res.show()
+	
+	return render_template('show_photo.html', photo=photo, photo_prev=photo_prev, photo_next=photo_next)
 
 
 @gallery.route('/delete-photo/<album_id>/<file>/')

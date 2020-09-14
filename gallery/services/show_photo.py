@@ -17,16 +17,33 @@ class ShowPhoto(object):
 		album = Album.objects(id=self.album_id, user=current_user.id, photos__file=self.file)
 		
 		if album.first():
-			pipelines = [
-				{'$unwind': {'path': '$photos'}},
-				{'$match': {'photos.file': self.file}}
+			pipeline = [
+				{'$unwind': {'path': '$photos', 'includeArrayIndex': 'counter'}}
 			]
-			photo = album.aggregate(*pipelines)
+			# выбираем конкретно запрашиваемую фотографию
+			photo = album.aggregate(*pipeline, {'$match': {'photos.file': self.file}})
+			photo = list(photo)[0]
+			
+			# предыдущая и следующая фотографии в альбоме
+			photo_prev = album.aggregate(*pipeline, {'$match': {'counter': photo.get('counter') - 1}})
+			photo_next = album.aggregate(*pipeline, {'$match': {'counter': photo.get('counter') + 1}})
 		else:
 			photo = []
-		
+			photo_prev = []
+			photo_next = []
+	
 		try:
-			return list(photo)[0]
+			photo_prev = list(photo_prev)[0]
 		except IndexError:
-			photo.append({'photos': []})
-			return photo[0]
+			photo_prev = []
+			photo_prev.append({'photos': []})
+			photo_prev = photo_prev[0]
+			
+		try:
+			photo_next = list(photo_next)[0]
+		except IndexError:
+			photo_next = []
+			photo_next.append({'photos': []})
+			photo_next = photo_next[0]
+		
+		return [photo, photo_prev, photo_next]

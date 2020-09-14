@@ -8,6 +8,20 @@
             {{ photo.photos.device }}
             <img src="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/max/" width="100%">
             <a href="/delete-photo/{{ photo._id }}/{{ photo.photos.file }}/" onclick="return confirm('Точно удалить фотографию?');">Удалить</a>
+
+            <div class="row">
+                {% if photo_prev._id %}
+                    <a href="/show-photo/{{ photo._id }}/{{ photo_prev.photos.file }}/" title="Предыдущее фото">
+                        <img src="/get-photo/{{ photo._id }}/{{ photo_prev.photos.file }}/min/">
+                    </a>
+                {% endif %}
+
+                {% if photo_next._id %}
+                    <a href="/show-photo/{{ photo._id }}/{{ photo_next.photos.file }}/" title="Следующее фото">
+                        <img src="/get-photo/{{ photo._id }}/{{ photo_next.photos.file }}/min/">
+                    </a>
+                {% endif %}
+            </div>
         </section>
     </div>
 {% endblock %}
