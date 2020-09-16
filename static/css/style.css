@@ -264,3 +264,7 @@ h2 {
 		min-height: 100px;
 	}
 }
+
+.loader {
+	display: none !important;
+}

@@ -2,6 +2,7 @@ from flask_security import current_user
 
 from models import Album
 
+
 class ShowPhoto(object):
 	"""
 	вывод оригинала фотографии

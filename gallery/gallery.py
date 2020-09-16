@@ -12,6 +12,7 @@ from gallery.services.delete_album import DeleteAlbum
 from gallery.services.photo_stream import PhotoStream
 from gallery.services.show_photo import ShowPhoto
 from gallery.services.delete_photo import DeletePhoto
+from gallery.services.filter_by_camera import FilterByCamera
 from .forms import LoginForm, AddAlbumForm, AddPhotosForm
 
 gallery = Blueprint('gallery', __name__, template_folder='templates')
@@ -88,7 +89,7 @@ def album(slug: str):
 	album = ViewAlbum(slug)
 	form = AddPhotosForm()
 	form.slug.data = slug
-	return render_template('album.html', album=album.album(), form=form)
+	return render_template('album.html', album=album.album(), devices=album.get_devices(), form=form)
 
 
 @gallery.route('/upload-photos/', methods=['POST'])
@@ -150,3 +151,12 @@ def delete_photo(album_id: str, file: str):
 	deleted = DeletePhoto(album_id, file)
 	album_slug = deleted.delete()
 	return redirect('/album/{}'.format(album_slug))
+
+
+@gallery.route('/filter/<album_slug>/<camera>/')
+def filter(album_slug: str, camera: str):
+	if not CheckUserLogin.check():
+		return redirect('/')
+	
+	photos = FilterByCamera(album_slug, camera)
+	return render_template('filtered_photos.html', photos=photos.filter(), filter=camera)

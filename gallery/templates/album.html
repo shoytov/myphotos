@@ -29,6 +29,16 @@
         <hr>
 
         <div class="container-fluid">
+            <strong>Камеры:</strong>
+            {% for device in devices %}
+                <a href="/filter/{{ album.slug }}/{{ device._id }}">{{ device._id }}</a>
+                {% if loop.index < devices | length %}
+                    |
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="container-fluid">
             <section class="container">
                 {% if album.photos | length > 0 %}
                     <div class="gallery">

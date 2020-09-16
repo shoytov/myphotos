@@ -4,6 +4,7 @@ from flask_security import current_user
 from config import Config
 from models import Album
 
+
 class DeletePhoto(object):
 	"""
 	удаление фотографии пользователем
