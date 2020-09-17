@@ -13,6 +13,7 @@ from gallery.services.photo_stream import PhotoStream
 from gallery.services.show_photo import ShowPhoto
 from gallery.services.delete_photo import DeletePhoto
 from gallery.services.filter_by_camera import FilterByCamera
+from gallery.services.get_album_cover import GetAlbumCover
 from .forms import LoginForm, AddAlbumForm, AddPhotosForm
 
 gallery = Blueprint('gallery', __name__, template_folder='templates')
@@ -160,3 +161,14 @@ def filter(album_slug: str, camera: str):
 	
 	photos = FilterByCamera(album_slug, camera)
 	return render_template('filtered_photos.html', photos=photos.filter(), filter=camera)
+
+
+@gallery.route('/get-album-cover/<album_id>/')
+def get_album_cover(album_id: str):
+	"""
+	вывод обложки для альбома
+	"""
+	if not CheckUserLogin.check():
+		return redirect('/')
+
+	return GetAlbumCover(album_id).cover()
