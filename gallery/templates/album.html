@@ -30,12 +30,15 @@
 
         <div class="container-fluid">
             <strong>Камеры:</strong>
-            {% for device in devices %}
-                <a href="/filter/{{ album.slug }}/{{ device._id }}">{{ device._id }}</a>
-                {% if loop.index < devices | length %}
-                    |
-                {% endif %}
-            {% endfor %}
+            {{ devices }}
+            {% if devices != None %}
+                {% for device in devices %}
+                    <a href="/filter/{{ album.slug }}/{{ device._id }}">{{ device._id }}</a>
+                    {% if loop.index < devices | length %}
+                        |
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         </div>
 
         <div class="container-fluid">
@@ -43,8 +46,14 @@
                 {% if album.photos | length > 0 %}
                     <div class="gallery">
                         {% for photo in album.photos %}
+                            {% if photo.created %}
+                                {% set created = photo.created | my_strftime %}
+                            {% else %}
+                                {% set created = '' %}
+                            {% endif %}
+
                             <a href="/show-photo/{{ album.id }}/{{ photo.file }}/">
-                                <figure class="picture" data-title="{{ photo.created | my_strftime }}" data-url="/get-photo/{{ album.id }}/{{ photo.file }}/min/"></figure>
+                                <figure class="picture" data-title="{{ photo.created }}" data-url="/get-photo/{{ album.id }}/{{ photo.file }}/min/"></figure>
                             </a>
                         {% endfor %}
                         <br style="clear: both;">
