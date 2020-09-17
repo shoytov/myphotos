@@ -30,15 +30,14 @@
 
         <div class="container-fluid">
             <strong>Камеры:</strong>
-            {{ devices }}
-            {% if devices != None %}
                 {% for device in devices %}
-                    <a href="/filter/{{ album.slug }}/{{ device._id }}">{{ device._id }}</a>
-                    {% if loop.index < devices | length %}
-                        |
+                    {% if device._id != None %}
+                        <a href="/filter/{{ album.slug }}/{{ device._id }}">{{ device._id }}</a>
+                        {% if loop.index < devices | length %}
+                            |
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
-            {% endif %}
         </div>
 
         <div class="container-fluid">
