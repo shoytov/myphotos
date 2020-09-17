@@ -66,6 +66,9 @@ class UploadPhotos(object):
 				photos_list.append(photo)
 		
 		# сортируем фотографии по дате создания в обратном порядке
-		photos_list = sorted(photos_list, key=itemgetter('created'), reverse=True)
+		try:
+			photos_list = sorted(photos_list, key=itemgetter('created'), reverse=True)
+		except TypeError:
+			photos_list = sorted(photos_list, key=itemgetter('file'))
 		
 		album.update(photos=photos_list)
