@@ -119,7 +119,12 @@ ul.nosyely_list {
   text-transform: capitalize;
   font-weight: 500;
 }
-.section_title h4:after {
+
+.section_title h3{
+  float: left;
+}
+
+.section_title h4:after, .section_title h3:after {
   height: 2px;
   width: 30px;
   content: "";
@@ -1984,7 +1989,7 @@ img {
   position: relative;
   overflow: hidden;
   margin: 0 auto;
-  cursor: crosshair;
+  cursor: pointer;
   -webkit-transition: all ease-in-out 0.4s;
   transition: all ease-in-out 0.4s;
 }
@@ -1997,15 +2002,13 @@ img {
 }
 .project_box_one .product_info {
   position: absolute;
-  top: 0;
   bottom: 0;
   width: 100%;
-  height: 100%;
-  padding: 30px 40px;
+  padding: 10px 20px 20px 10px;
   background-color: rgba(0, 0, 0, 0.7);
-  -webkit-transition: all ease-in-out 0.4s;
+  /* -webkit-transition: all ease-in-out 0.4s;
   transition: all ease-in-out 0.4s;
-  opacity: 0;
+  opacity: 1; */
 }
 .project_box_one .product_info .product_info_text {
   display: table;
@@ -2017,7 +2020,7 @@ img {
 .project_box_one .product_info .product_info_text .product_info_text_inner {
   display: table-cell;
   vertical-align: middle;
-  text-align: center;
+  text-align: right;
 }
 .project_box_one .product_info .product_info_text .product_info_text_inner h4 {
   color: #ffffff;
@@ -2027,7 +2030,7 @@ img {
   transform: translateY(10px);
   -webkit-transition: all ease-in-out 0.4s;
   transition: all ease-in-out 0.4s;
-  opacity: 0;
+  opacity: 1;
   margin-bottom: 5px;
 }
 .project_box_one .product_info .product_info_text .product_info_text_inner i {
@@ -2038,7 +2041,7 @@ img {
   transform: translateY(-10px);
   -webkit-transition: all ease-in-out 0.4s;
   transition: all ease-in-out 0.4s;
-  opacity: 0;
+  opacity: 1;
 }
 .project_box_one:hover img {
   /* IE 9 */
@@ -2049,19 +2052,19 @@ img {
   -webkit-transition: all ease-in-out 0.4s;
   transition: all ease-in-out 0.4s;
 }
-.project_box_one:hover .product_info {
+/* .project_box_one:hover .product_info {
   opacity: 1;
-}
-.project_box_one:hover .product_info .product_info_text_inner h4 {
+} */
+/* .project_box_one:hover .product_info .product_info_text_inner h4 {
   -webkit-transform: translateY(0);
   transform: translateY(0);
   opacity: 1;
-}
-.project_box_one:hover .product_info .product_info_text_inner i {
+} */
+/* .project_box_one:hover .product_info .product_info_text_inner i {
   -webkit-transform: translateY(0);
   transform: translateY(0);
   opacity: 1;
-}
+} */
 
 .mfp-title {
   text-align: left;

@@ -1,32 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section id="gallery">
+<div class="photostream">
+    <h3>Ваш фотопоток</h3>
 
-	<div class="container-fluid">
-		<h1>Фотопоток</h1>
-
-        <section class="container">
-            {% if photos | length > 0 %}
+    <div class="portfolio" id="gallery">
+        <div class="container-fluid">
+            <!--=================== masaonry portfolio start====================-->
+            <div class="grid img-container justify-content-center no-gutters">
+                {% if photos | length > 0 %}
                 <div class="gallery">
                     {% for photo in photos %}
 
-                        <a href="/show-photo/{{ photo._id }}/{{ photo.photos.file }}/">
-                            {% if photo.photos.created %}
-                                {% set created = photo.photos.created | my_strftime %}
-                            {% else %}
-                                {% set created = '' %}
-                            {% endif %}
-                            <figure class="picture glightbox2" data-title="{{ created }}" data-url="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/min/"></figure>
-                        </a>
+                    <a href="/show-photo/{{ photo._id }}/{{ photo.photos.file }}/">
+                        {% if photo.photos.created %}
+                        {% set created = photo.photos.created | my_strftime %}
+                        {% else %}
+                        {% set created = '' %}
+                        {% endif %}
+                        <figure class="picture glightbox2" data-title="{{ created }}"
+                            data-url="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/min/"></figure>
+                    </a>
                     {% endfor %}
                     <br style="clear: both;">
                 </div>
-            {% endif %}
-        </section>
-
+                {% endif %}
+            </div>
+            <!--=================== masaonry portfolio end====================-->
+        </div>
     </div>
+</div>
 
-</section>
 
 {% endblock %}

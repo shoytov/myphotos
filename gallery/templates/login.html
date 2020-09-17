@@ -1,42 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div>
-        <div class="img_card">
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-7 content_section">
-                    <div class="content_box">
-                        <div class="content_box_inner">
-                            <div>
-                                <h3>
-                                    Войти
-                                </h3>
-                            </div>
-                            <!--===================testimonial start====================-->
-                            <div class="login_box mt50 row">
-                                <div class="col-12">
-                                    <form id="login_form" method="post" action="/login/">
-                                        {{ form.hidden_tag() }}
-                        
-                                        {% for element in form %}
-                                            {% if element.widget.input_type != 'hidden' %}
-                                                <p>
-                                                    {{ element(placeholder=element.description, class_="form-control mb-3") }}
-                                                </p>
-                                            {% endif %}
-                                        {% endfor %}
-                        
-                                        <input type="submit" class="btn btn-primary" value="Войти">
-                                    </form>
-                                    <div id="error_message">{{ message }}</div>
-                                </div>                                
-                            </div>
-                            <!--===================testimonial end====================-->
+<div class="login_page">
+    <div class="img_card">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-7 content_section">
+                <div class="content_box">
+                    <div class="content_box_inner">
+                        <div>
+                            <h3>
+                                Войти
+                            </h3>
                         </div>
+                        <!--===================testimonial start====================-->
+                        <div class="login_box mt50 row">
+                            <div class="col-12">
+                                <form id="login_form" method="post" action="/login/">
+                                    {{ form.hidden_tag() }}
+
+                                    {% for element in form %}
+                                    {% if element.widget.input_type != 'hidden' %}
+                                    <p>
+                                        {{ element(placeholder=element.description, class_="form-control mb-3") }}
+                                    </p>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    <input type="submit" class="btn btn-primary" value="Войти">
+                                </form>
+                                <div id="error_message">{{ message }}</div>
+                            </div>
+                        </div>
+                        <!--===================testimonial end====================-->
                     </div>
                 </div>
-                <div class="col-md-6 col-5 img_section" style="background-image: url('{{ url_for('static', filename='img/bg/service_bg.png') }}');"></div>
             </div>
+            <div class="col-md-6 col-5 img_section"
+                style="background-image: url('{{ url_for('static', filename='img/bg/service_bg.png') }}');"></div>
         </div>
     </div>
+</div>
 {% endblock %}

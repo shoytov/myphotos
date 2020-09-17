@@ -1,21 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section>
-        <div class="container-fluid">
-            <a href="/add-album/" class="btn-primary">Добавить альбом</a>
-        </div>
+<div class="albums">
+        <div class="element_section mt30 mb50">
+        <div class="section_title mb50">
 
-        <hr>
+            <h3 class="mr-3">Альбомы</h3>
+            <a href="/add-album/" class="btn btn-primary">Создать альбом</a>
 
-        <div class="container-fluid">
-            <div class="row">
-            {% for album in albums %}
-                <a href="/album/{{ album.slug }}/">
-                    {{ album.name }} ({{ album.created | my_strftime }})
-                </a> &nbsp;
-            {% endfor %}
+                </div>
+        <div class="section_content mt30">
+            <div class="portfolio gutters grid img-container row">
+                {% for album in albums %}
+                <div class="grid-item col-sm-12 col-md-6 col-lg-3">
+                    <a href="/album/{{ album.slug }}/" title="title">
+                        <div class="project_box_one">
+                            <img src="/get-album-cover/{{ album.id }}/" alt="pro1" />
+                            <div class="product_info">
+                                <div class="product_info_text">
+                                    <div class="product_info_text_inner">
+                                        <h4>{{ album.name }}</h4>
+                                        <h4>{{ album.created | my_strftime }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
             </div>
         </div>
-    </section>
+    </div>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
 {% endblock %}
