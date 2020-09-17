@@ -1,107 +1,158 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic'>
+    
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ekko-lightbox.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fluid/css/style.css') }}">
 
-    <title>Личный фотоархив</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/et-line.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ionicons.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slick.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/animate.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body>
+    <div class="loader">
+        <div class="loader-outter"></div>
+        <div class="loader-inner"></div>
+    </div>
+    <div class="body-container container-fluid">
+        <a class="menu-btn" href="javascript:void(0)">
+            <i class="ion ion-grid"></i>
+        </a>
+        <div class="row justify-content-center">
+            <!--=================== side menu ====================-->
+            <div class="col-lg-2 col-md-3 col-12 menu_block">
 
-<header id="top">
-
-	<div class="container-fluid">
-
-        <div class="row">
-
-            <div class="col-lg-4 col-md-12 site-title">
-                <a href="/"><h1>MyPhotos</h1></a>
-                <h2>Личный фотоархив</h2>
-
-            </div>
-
-            {% if current_user.is_authenticated %}
-                <div class="col-lg-8 col-md-12 main-menu">
-
-                    <nav class="navbar navbar-light">
-                      <ul class="nav navbar-nav single-page-nav">
-                        <li class="nav-item">
-                          <a class="nav-link external" href="/albums/">Альбомы</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link external" href="/logout/" title="logout" target="_parent">Выйти</a>
-                        </li>
-                      </ul>
-                    </nav>
-
+                <!--logo -->
+                <div class="logo_box">
+                    <a href="#">
+                        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="cocoon">
+                    </a>
                 </div>
-            {% endif %}
+                <!--logo end-->
 
-        </div>
+                <!--main menu -->
+                <div class="side_menu_section">
+                    {% if current_user.is_authenticated %}
+                    <ul class="menu_nav">
+                        <li class="active">
+                            <a href="/">
+                                Главная
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/albums/">
+                                Альбомы
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/logout/" title="logout" target="_parent">
+                                Выйти
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+                <!--main menu end -->
 
-        <div class="row">
-            <div class="col-md-12">
-            	<hr class="sigma-hr">
+                <!--filter menu -->
+                <div class="side_menu_section">
+                    <h4 class="side_title">filter by:</h4>
+                    <ul id="filtr-container" class="filter_nav">
+                        <li data-filter="*" class="active"><a href="javascript:void(0)">all</a></li>
+                        <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
+                        <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
+                        <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
+                        <li data-filter=".architecture"><a href="javascript:void(0)">architecture</a></li>
+                    </ul>
+                </div>
+                <!--filter menu end -->
+
+                <!--social and copyright -->
+                <div class="side_menu_bottom">
+                    <div class="side_menu_bottom_inner">
+                        <ul class="social_menu">
+                            <li>
+                                <a href="#"> <i class="ion ion-social-pinterest"></i> </a>
+                            </li>
+                            <li>
+                                <a href="#"> <i class="ion ion-social-facebook"></i> </a>
+                            </li>
+                            <li>
+                                <a href="#"> <i class="ion ion-social-twitter"></i> </a>
+                            </li>
+                            <li>
+                                <a href="#"> <i class="ion ion-social-dribbble"></i> </a>
+                            </li>
+                        </ul>
+                        <div class="copy_right">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            <p class="copyright">Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This
+                                template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                                    href="https://colorlib.com" target="_blank">Colorlib</a></p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </div>
+                    </div>
+                </div>
+                <!--social and copyright end -->
+
             </div>
-        </div>
+            <!--=================== side menu end====================-->
 
+            <!--=================== content body ====================-->
+            <div class="col-lg-10 col-md-9 col-12 body_block  align-content-center">
+                {% block content %}
+                
+                {% endblock %}
+            </div>
+            <!--=================== content body end ====================-->
+        </div>
     </div>
 
-</header>
 
+  
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 
-{% block content %}
-{% endblock %}
+    <script src="{{ url_for('static', filename='js/popper.js') }}"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/waypoints.min.js') }}"></script>
 
-<footer>
+    <script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
 
-	<div class="container-fluid">
+    <script src="{{ url_for('static', filename='js/imgloaded.js') }}"></script>
 
-    	<div class="row">
-            <div class="col-md-12">
-            	<hr class="sigma-hr">
-            </div>
-        </div>
+    <script src="{{ url_for('static', filename='js/isotope.js') }}"></script>
 
-        <div class="row">
-        	<div class="sigma-copyright col-lg-8">
-            	<p>Copyright © Dmitry Shoytov</p>
-            </div>
+    <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
 
-            <div class="sigma-copyright col-lg-4 single-page-nav text-right">
-            	<p><a href="#top">Наверх</a></p>
-            </div>
-        </div>
+    <script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
 
-    </div>
+    <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
 
-</footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
-		<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/ekko-lightbox.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/jquery.singlePageNav.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='fluid/js/latae.js') }}"></script>
 
-        <script src="{{ url_for('static', filename='fluid/js/latae.js') }}"></script>
-
-        <script>
-            $(document).ready(function(){
-                $(".gallery").latae({
-                    init : function() { console.log('bonjour'); },
-                    loadPicture : function(event, img) { console.log($(img)); },
-                    resize : function(event, gallery) { console.log(gallery); },
-                    displayTitle: true
-                });
+    <script>
+        $(document).ready(function () {
+            $(".gallery").latae({
+                init: function () { console.log('bonjour'); },
+                loadPicture: function (event, img) { console.log($(img)); },
+                resize: function (event, gallery) { console.log(gallery); },
+                displayTitle: true
             });
-        </script>
+        });
+    </script>
 </body>
+
 </html>
