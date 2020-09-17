@@ -1,6 +1,9 @@
 import os
+import io
 from flask_security import current_user
 from flask import send_file
+from PIL import Image as PilImage
+import PIL
 
 from config import Config
 from models import Album
@@ -29,7 +32,21 @@ class GetPhotoFile(object):
 
 		if album:
 			file = os.path.join(case.get(self.filetype), str(current_user.id), album.slug, self.filename)
-		else:
-			file = os.path.join(Config.BASE_DIR, 'static/images/forbidden.jpg')
 			
-		return send_file(file, mimetype='image/jpeg')
+			# ресайз картинки
+			if self.filetype == 'max':
+				img = PilImage.open(file, mode='r')
+				ratio = (Config.MAX_WIDTH / float(img.size[0]))
+				height = int((float(img.size[1]) * float(ratio)))
+				img = img.resize((Config.MAX_WIDTH, height), PIL.Image.ANTIALIAS)
+				rgb_im = img.convert('RGB')
+				
+				img_response = io.BytesIO()
+				rgb_im.save(img_response, 'JPEG')
+				img_response.seek(0)
+			else:
+				img_response = file
+		else:
+			img_response = os.path.join(Config.BASE_DIR, 'static/images/forbidden.jpg')
+			
+		return send_file(img_response, mimetype='image/jpeg')
