@@ -1,48 +1,61 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section>
-        <div class="container-fluid">
-            <h1>{{ album.name }} ({{ album.photos | length }})</h1>
+<div class="album">
+    <div class="element_section mb50">
+        <div class="section_title mb50 d-flex justify-content-between">
+            <div class="block_title d-flex">
+                <h3 class="mr-3 d-block">{{ album.name }}</h3>
+                <p>({{ album.photos | length }} фото)</p>
+            </div>
+            <div class="block_action">
+                <a class="btn btn-primary btn-rounded" href="/delete-album/{{ album.id }}/"
+                    onclick="return confirm('Точно удалить альбом со всеми фотографиями?');">удалить альбом</a>
+            </div>
+        </div>
 
-            <a href="/delete-album/{{ album.id }}/" onclick="return confirm('Точно удалить альбом со всеми фотографиями?');">
-                удалить альбом
-            </a>
+        <div class="section_content mt30 row">
 
-            <p>{{ album.description }}</p>
+            <div class="album-description col-lg-8 col-md-8 col-12 mb50">
+                <div class="section_title">
+                    <h4>Описание альбома</h4>
+                </div>
+                <p>{{ album.description }}</p>
+            </div>
 
-            <form id="add-album" method="post" action="/upload-photos/" enctype="multipart/form-data">
-                {{ form.hidden_tag() }}
+            <div class="album_add_photo col-lg-8 col-md-8 col-12 mb50">
+                <div class="section_title">
+                    <h4>добавление фото</h4>
+                </div>
+                <form id="add-album" method="post" action="/upload-photos/" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
 
-                {% for element in form %}
+                    {% for element in form %}
                     {% if element.widget.input_type != 'hidden' %}
-                        <p>
-                            {{ element(placeholder=element.description, class_="form-control mb-3") }}
-                        </p>
+
+                    {{ element(placeholder=element.description, class_="form-control mb-3") }}
+
                     {% endif %}
-                {% endfor %}
+                    {% endfor %}
 
-                <input type="submit" class="btn btn-primary" value="Добавить">
-            </form>
-        </div>
+                    <input type="submit" class="btn btn-primary" value="Добавить">
+                </form>
+            </div>
 
-        <hr>
-
-        <div class="container-fluid">
-            <strong>Камеры:</strong>
-                {% for device in devices %}
-                    {% if device._id != None %}
-                        <a href="/filter/{{ album.slug }}/{{ device._id }}">{{ device._id }}</a>
-                        {% if loop.index < devices | length %}
-                            |
+            <div class="album_photostream col-12">
+                <div class="camera_tags">
+                    Камеры:
+                    {% for device in devices %}
+                        {% if device._id != None %}
+                            <a href="/filter/{{ album.slug }}/{{ device._id }}">{{ device._id }}</a>
+                            {% if loop.index < devices | length %}
+                                |
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                {% endfor %}
-        </div>
-
-        <div class="container-fluid">
-            <section class="container">
-                {% if album.photos | length > 0 %}
+                    {% endfor %}
+                </div>
+                <div class="photostream">
+                    {% if album.photos | length > 0 %}
                     <div class="gallery">
                         {% for photo in album.photos %}
                             {% if photo.created %}
@@ -57,8 +70,11 @@
                         {% endfor %}
                         <br style="clear: both;">
                     </div>
-                {% endif %}
-            </section>
+                    {% endif %}
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</div>
 {% endblock %}

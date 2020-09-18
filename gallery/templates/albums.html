@@ -2,13 +2,11 @@
 
 {% block content %}
 <div class="albums">
-        <div class="element_section mt30 mb50">
+    <div class="element_section mb50">
         <div class="section_title mb50">
-
             <h3 class="mr-3">Альбомы</h3>
             <a href="/add-album/" class="btn btn-primary">Создать альбом</a>
-
-                </div>
+        </div>
         <div class="section_content mt30">
             <div class="portfolio gutters grid img-container row">
                 {% for album in albums %}
@@ -31,17 +29,5 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
 </div>
-
-
-
 {% endblock %}

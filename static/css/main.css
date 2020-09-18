@@ -120,11 +120,11 @@ ul.nosyely_list {
   font-weight: 500;
 }
 
-.section_title h3{
+.albums .section_title h3{
   float: left;
 }
 
-.section_title h4:after, .section_title h3:after {
+.section_title h4:after{
   height: 2px;
   width: 30px;
   content: "";
