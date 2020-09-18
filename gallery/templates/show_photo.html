@@ -1,32 +1,81 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container-fluid">
-        <section class="container">
-            <a href="/album/{{ photo.name }}/">{{ photo.name }}</a>
-            {% if photo.photos.created %}
-                {{ photo.photos.created | my_strftime }}
-            {% endif %}
+<div class="album element_photo">
+    <div class="element_section mb50">
+        <div class="back_page mb10"><a href="">&larr; назад</a></div>
 
-            {% if photo.photos.device %}
-                {{ photo.photos.device }}
-            {% endif %}
-            <img src="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/max/" width="100%">
-            <a href="/delete-photo/{{ photo._id }}/{{ photo.photos.file }}/" onclick="return confirm('Точно удалить фотографию?');">Удалить</a>
-
-            <div class="row">
+        <div class="photo_query section_content mt30 row">
+            <div class="photo_prew col-lg-3 d-flex align-items-center justify-content-end">
                 {% if photo_prev._id %}
-                    <a href="/show-photo/{{ photo._id }}/{{ photo_prev.photos.file }}/" title="Предыдущее фото">
-                        <img src="/get-photo/{{ photo._id }}/{{ photo_prev.photos.file }}/min/">
-                    </a>
-                {% endif %}
-
-                {% if photo_next._id %}
-                    <a href="/show-photo/{{ photo._id }}/{{ photo_next.photos.file }}/" title="Следующее фото">
-                        <img src="/get-photo/{{ photo._id }}/{{ photo_next.photos.file }}/min/">
-                    </a>
+                <a href="/show-photo/{{ photo._id }}/{{ photo_prev.photos.file }}/" title="Предыдущее фото">
+                    <div class="project_box_one">
+                        <img src="/get-photo/{{ photo._id }}/{{ photo_prev.photos.file }}/min/" alt="pro1" />
+                        <div class="product_info">
+                            <div class="product_info_text">
+                                <div class="product_info_text_inner">
+                                    <i class="ion ion-android-arrow-back"></i>
+                                    <h4>Предыдущее фото</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
                 {% endif %}
             </div>
-        </section>
+
+            <div class="photo_big col-lg-6">
+                <img src="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/max/">
+                <div class="photo_desc">
+                    <div class="photo_meta">
+                        <a href="/album/{{ photo.name }}/">{{ photo.name }}</a>
+                        {% if photo.photos.created %}
+                            {{ photo.photos.created | my_strftime }}
+                        {% endif %}
+        
+                        {% if photo.photos.device %}
+                            {{ photo.photos.device }}
+                        {% endif %}
+                    </div>
+                    <div class="photo_action">
+                        <a href="/delete-photo/{{ photo._id }}/{{ photo.photos.file }}/" onclick="return confirm('Точно удалить фотографию?');">
+                            Удалить
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo_next col-lg-3 d-flex align-items-center justify-content-start">
+                {% if photo_next._id %}
+                <a href="/show-photo/{{ photo._id }}/{{ photo_next.photos.file }}/" title="Следующее фото">
+                    <div class="project_box_one">
+                        <img src="/get-photo/{{ photo._id }}/{{ photo_next.photos.file }}/min/" alt="pro1" />
+                        <div class="product_info">
+                            <div class="product_info_text">
+                                <div class="product_info_text_inner">
+                                    <i class="ion ion-android-arrow-forward"></i>
+                                    <h4>Следующее фото</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
     </div>
+</div>
+
+
+<div class="container-fluid">
+    <section class="container">
+
+
+        <div class="row">
+
+
+
+        </div>
+    </section>
+</div>
 {% endblock %}

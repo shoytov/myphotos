@@ -3,6 +3,8 @@
 {% block content %}
 <div class="album">
     <div class="element_section mb50">
+        <div class="back_page mb10"><a href="">&larr; назад</a></div>
+
         <div class="section_title mb50 d-flex justify-content-between">
             <div class="block_title d-flex">
                 <h3 class="mr-3 d-block">{{ album.name }}</h3>
@@ -43,7 +45,7 @@
             </div>
 
             <div class="album_photostream col-12">
-                <div class="camera_tags">
+                <div class="camera_tags mb10">
                     Камеры:
                     {% for device in devices %}
                         {% if device._id != None %}

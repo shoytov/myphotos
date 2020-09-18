@@ -1,30 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section>
-        <div class="container-fluid">
-            <h1>
-                <a href="/album/{{ photos.0.slug }}/">{{ photos.0.name }} ({{ photos.0.photos | length }})
-            </h1>
-            <p>{{ photos.0.description }}</p>
-            <p>Фильтр: <strong>{{ filter }}</strong></p>
+<div class="album filtered_photos">
+    <div class="element_section mb50">
+        <div class="back_page mb10"><a href="">&larr; назад</a></div>
+
+        <div class="section_title mb50 d-flex justify-content-between">
+            <div class="block_title d-flex">
+                <h3 class="mr-3 d-block">{{ photos.0.name }}</h3>
+                <p>({{ photos.0.photos | length }} фото)</p>
+            </div>
         </div>
 
-        <hr>
+        <div class="section_content mt30 row">
 
-        <div class="container-fluid">
-            <section class="container">
-                {% if photos | length > 0 %}
+            <div class="photo-description col-lg-8 col-md-8 col-12 mb50">
+                <div class="section_title">
+                    <h4>Описание фото</h4>
+                </div>
+                <p>{{ photos.0.description }}</p>
+            </div>
+
+            <div class="photo-filter col-lg-8 col-md-8 col-12 mb50">
+                <div class="section_title">
+                    <h4>Фильтр: {{ filter }}</h4>
+                </div>
+                <div>
+                    {% if photos | length > 0 %}
                     <div class="gallery">
                         {% for photo in photos %}
-                            <a href="/show-photo/{{ photo._id }}/{{ photo.photos.file }}/">
-                                <figure class="picture" data-title="{{ photo.photos.created | my_strftime }}" data-url="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/min/"></figure>
-                            </a>
+                        <a href="/show-photo/{{ photo._id }}/{{ photo.photos.file }}/">
+                            <figure class="picture" data-title="{{ photo.photos.created | my_strftime }}"
+                                data-url="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/min/"></figure>
+                        </a>
                         {% endfor %}
                         <br style="clear: both;">
                     </div>
-                {% endif %}
-            </section>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+</div>
 {% endblock %}
