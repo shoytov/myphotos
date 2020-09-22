@@ -5,6 +5,7 @@ from flask_babelex import Babel
 from flask_login import LoginManager
 from flask_admin import Admin
 from flask_uploads import UploadSet, IMAGES, configure_uploads
+from flask_basicauth import BasicAuth
 
 from config import Config
 
@@ -22,6 +23,8 @@ configure_uploads(app, photos)
 
 # локализация
 babel = Babel(app)
+
+basic_auth = BasicAuth(app)
 
 SESSION_TYPE = 'mongodb'
 SESSION_MONGODB_DB = Config.MONGODB_SETTINGS.get('db')

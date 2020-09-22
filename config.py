@@ -23,6 +23,9 @@ class Config(object):
 
     SECURITY_PASSWORD_SALT = 'afadfd-sdfsd3432sdfsf-msfgfd2fEFdfds'
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
+    
+    BASIC_AUTH_USERNAME = os.environ['BASIC_AUTH_USERNAME']
+    BASIC_AUTH_PASSWORD = os.environ['BASIC_AUTH_PASSWORD']
 
     PHOTOS_DIR = 'photos'
     MIN_PHOTOS_DIR = 'min_photos'
