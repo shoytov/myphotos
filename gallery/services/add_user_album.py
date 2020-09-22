@@ -12,9 +12,11 @@ class AddUserAlbum(object):
 		self.name = name
 		self.description = description
 		
-	def add(self) -> None:
+	def add(self) -> Album:
 		album = Album()
 		album.user = current_user.id
 		album.name = self.name
 		album.description = self.description
 		album.save()
+		
+		return album

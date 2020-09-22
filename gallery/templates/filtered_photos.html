@@ -3,7 +3,7 @@
 {% block content %}
 <div class="album filtered_photos">
     <div class="element_section mb50">
-        <div class="back_page mb10"><a href="">&larr; назад</a></div>
+        <div class="back_page mb10"><a href="{{ url_for('.album', slug=photos.0.name) }}">&larr; назад</a></div>
 
         <div class="section_title mb50 d-flex justify-content-between">
             <div class="block_title d-flex">

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import logout_user
 
 from gallery.services.check_user_login import CheckUserLogin
@@ -41,7 +41,7 @@ def login():
 	login = UserLogin(request.form.get('username'), request.form.get('password'))
 	
 	if login.login():
-		return redirect('/')
+		return redirect(url_for('.index'))
 	else:
 		form = LoginForm(request.form)
 		return render_template('login.html', form=form, message='Неверные данные')
@@ -53,7 +53,7 @@ def logout():
 	разлогинивание пользователя
 	"""
 	logout_user()
-	return redirect('/')
+	return redirect(url_for('.index'))
 
 
 @gallery.route('/albums/')
@@ -62,7 +62,7 @@ def albums():
 	вывод альбомов пользователя
 	"""
 	if not CheckUserLogin.check():
-		return redirect('/')
+		return redirect(url_for('.index'))
 	
 	albums = GetUserAlbums.get()
 	return render_template('albums.html', albums=albums)
@@ -78,8 +78,9 @@ def add_album():
 		return render_template('add_album.html', form=form)
 	else:
 		album = AddUserAlbum(request.form.get('name'), request.form.get('description'))
-		album.add()
-		return redirect('/albums/')
+		created_album = album.add()
+		
+		return redirect(url_for('.album', slug=created_album.slug))
 	
 	
 @gallery.route('/album/<slug>/')
@@ -99,7 +100,7 @@ def upload_photos():
 	загрузка фотографий пользователем в альбом
 	"""
 	UploadPhotos.upload()
-	return redirect('/album/{}/'.format(request.form.get('slug')))
+	return redirect(url_for('.album', slug=request.form.get('slug')))
 
 
 @gallery.route('/get-photo/<album_id>/<filename>/<file_type>/')
@@ -120,11 +121,11 @@ def delete_album(album_id: str):
 	удаление альбома пользователя со всеми фотографиями
 	"""
 	if not CheckUserLogin.check():
-		return
+		return redirect(url_for('.index'))
 	
 	deleted = DeleteAlbum(album_id)
 	deleted.delete()
-	return redirect('/albums/')
+	return redirect(url_for('.albums'))
 
 
 @gallery.route('/show-photo/<album_id>/<file>/')
@@ -133,7 +134,7 @@ def show_photo(album_id: str, file: str):
 	вывод оригинала фотографии
 	"""
 	if not CheckUserLogin.check():
-		return redirect('/')
+		return redirect(url_for('.index'))
 	
 	res = ShowPhoto(album_id, file)
 	photo, photo_prev, photo_next = res.show()
@@ -147,17 +148,17 @@ def delete_photo(album_id: str, file: str):
 	удаление фотографии
 	"""
 	if not CheckUserLogin.check():
-		return redirect('/')
+		return redirect(url_for('.index'))
 	
 	deleted = DeletePhoto(album_id, file)
 	album_slug = deleted.delete()
-	return redirect('/album/{}'.format(album_slug))
+	return redirect(url_for('.album', slug=album_slug))
 
 
 @gallery.route('/filter/<album_slug>/<camera>/')
 def filter(album_slug: str, camera: str):
 	if not CheckUserLogin.check():
-		return redirect('/')
+		return redirect(url_for('.index'))
 	
 	photos = FilterByCamera(album_slug, camera)
 	return render_template('filtered_photos.html', photos=photos.filter(), filter=camera)
@@ -169,6 +170,6 @@ def get_album_cover(album_id: str):
 	вывод обложки для альбома
 	"""
 	if not CheckUserLogin.check():
-		return redirect('/')
-
+		return redirect(url_for('.index'))
+	
 	return GetAlbumCover(album_id).cover()
