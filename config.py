@@ -14,6 +14,8 @@ class Config(object):
         'port': int(os.environ['DB_PORT'])
     }
     
+    MAX_CONTENT_LENGTH = 1024 * 1024 * 1024
+    
     HOST = 'http://127.0.0.1:5000'
     BASE_DIR = os.getcwd()
 
