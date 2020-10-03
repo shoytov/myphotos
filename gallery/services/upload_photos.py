@@ -44,13 +44,16 @@ class UploadPhotos(object):
 				for tag_id in exif_data:
 					tag = TAGS.get(tag_id, tag_id)
 					data = exif_data.get(tag_id)
-					if isinstance(data, bytes):
-						data = data.decode()
+					try:
+						if isinstance(data, bytes):
+							data = data.decode()
 						
-					if f"{tag:25}".find('Model') == 0:
-						device = data
-					if f"{tag:25}".find('DateTimeOriginal') == 0:
-						created = data
+						if f"{tag:25}".find('Model') == 0:
+							device = data
+						if f"{tag:25}".find('DateTimeOriginal') == 0:
+							created = data
+					except:
+						pass
 				
 				ratio = (Config.WIDTH / float(image.size[0]))
 				height = int((float(image.size[1]) * float(ratio)))
