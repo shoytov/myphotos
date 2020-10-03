@@ -2,9 +2,6 @@ import os
 
 
 class Config(object):
-    HOST = 'http://127.0.0.1:5000'
-    BASE_DIR = os.getcwd()
-    
     SECRET_KEY = 'sdfsdlkJhghgFD#2342hjhfgd353fgfddg'
 
     DEBUG = True
@@ -16,6 +13,9 @@ class Config(object):
         'host': os.environ['DB_HOST'],
         'port': int(os.environ['DB_PORT'])
     }
+    
+    HOST = 'http://127.0.0.1:5000'
+    BASE_DIR = os.getcwd()
 
     WIDTH = 300  # размер миниатюры картинки
     MAX_WIDTH = 1000  # размер картинки при большом выводе

@@ -28,7 +28,7 @@
                 <img src="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/max/">
                 <div class="photo_desc">
                     <div class="photo_meta">
-                        <a href="/album/{{ photo.name }}/">{{ photo.name }}</a>
+                        <a href="/album/{{ photo.slug }}/">{{ photo.name }}</a>
                         {% if photo.photos.created %}
                             {{ photo.photos.created | my_strftime }}
                         {% endif %}
