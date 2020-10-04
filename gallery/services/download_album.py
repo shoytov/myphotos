@@ -1,9 +1,7 @@
 import os
-from io import BytesIO
-import zipfile
 import zipstream
 from flask_security import current_user
-from flask import send_file, Response, stream_with_context
+from flask import Response, stream_with_context
 from config import Config
 from models import Album
 
