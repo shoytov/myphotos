@@ -11,8 +11,12 @@
                 <p>({{ album.photos | length }} фото)</p>
             </div>
             <div class="block_action">
+                <a class="btn btn-primary btn-rounded" href="/download-album/{{ album.id }}/">
+                    скачать альбом
+                </a>
                 <a class="btn btn-primary btn-rounded" href="/delete-album/{{ album.id }}/"
-                    onclick="return confirm('Точно удалить альбом со всеми фотографиями?');">удалить альбом</a>
+                    onclick="return confirm('Точно удалить альбом со всеми фотографиями?');">удалить альбом
+                </a>
             </div>
         </div>
 

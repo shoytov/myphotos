@@ -14,6 +14,7 @@ from gallery.services.show_photo import ShowPhoto
 from gallery.services.delete_photo import DeletePhoto
 from gallery.services.filter_by_camera import FilterByCamera
 from gallery.services.get_album_cover import GetAlbumCover
+from gallery.services.download_album import DownloadAlbum
 from .forms import LoginForm, AddAlbumForm, AddPhotosForm
 
 gallery = Blueprint('gallery', __name__, template_folder='templates')
@@ -126,6 +127,18 @@ def delete_album(album_id: str):
 	deleted = DeleteAlbum(album_id)
 	deleted.delete()
 	return redirect(url_for('.albums'))
+
+
+@gallery.route('/download-album/<album_id>/')
+def download_album(album_id: str):
+	"""
+	скачивание альбома архивом
+	"""
+	if not CheckUserLogin.check():
+		return redirect(url_for('.index'))
+	
+	zipfile = DownloadAlbum(album_id)
+	return zipfile.download()
 
 
 @gallery.route('/show-photo/<album_id>/<file>/')
