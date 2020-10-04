@@ -1,8 +1,9 @@
 import os
 from io import BytesIO
 import zipfile
+import zipstream
 from flask_security import current_user
-from flask import send_file
+from flask import send_file, Response, stream_with_context
 from config import Config
 from models import Album
 
@@ -14,15 +15,18 @@ class DownloadAlbum(object):
 	def __init__(self, album_id: str):
 		self.album = Album.objects(id=album_id, user=current_user.id).first()
 		
-	def download(self):
-		memory_file = BytesIO()
+	def generate_zip(self):
+		"""
+		создание архива в поток
+		"""
 		path = os.path.join(Config.PHOTOS_DIR, str(current_user.id), self.album.slug)
+		z = zipstream.ZipFile(mode='w', compression=zipstream.ZIP_DEFLATED)
 		
-		with zipfile.ZipFile(memory_file, 'w') as zf:
-			for root, dirs, files in os.walk(path):
-				for file in files:
-					zf.write(os.path.join(path, file), '{}/{}'.format(self.album.slug, file), zipfile.ZIP_DEFLATED)
+		for filename in os.listdir(path):
+			z.write(os.path.join(path, filename), arcname='{}/{}'.format(self.album.slug, filename))
+			yield from z.flush()
 		
-		memory_file.seek(0)
+		yield from z
 		
-		return send_file(memory_file, attachment_filename='{}.zip'.format(self.album.slug), as_attachment=True)
+	def download(self):
+		return Response(stream_with_context(self.generate_zip()), mimetype='application/zip')
