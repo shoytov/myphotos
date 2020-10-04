@@ -38,6 +38,10 @@
                         {% endif %}
                     </div>
                     <div class="photo_action">
+                        <a href="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/full/">
+                            Скачать оригинал фотографии
+                        </a>
+                        |
                         <a href="/delete-photo/{{ photo._id }}/{{ photo.photos.file }}/" onclick="return confirm('Точно удалить фотографию?');">
                             Удалить
                         </a>

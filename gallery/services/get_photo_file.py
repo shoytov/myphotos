@@ -27,7 +27,8 @@ class GetPhotoFile(object):
 		
 		case = {
 			'min': Config.MIN_PHOTOS_DIR,
-			'max': Config.UPLOADS_DEFAULT_DEST
+			'max': Config.UPLOADS_DEFAULT_DEST,
+			'full': Config.UPLOADS_DEFAULT_DEST
 		}
 
 		if album:
@@ -48,5 +49,10 @@ class GetPhotoFile(object):
 				img_response = file
 		else:
 			img_response = os.path.join(Config.BASE_DIR, 'static/images/forbidden.jpg')
+		
+		if self.filetype != 'full':
+			as_attachment = False
+		else:
+			as_attachment = True
 			
-		return send_file(img_response, mimetype='image/jpeg')
+		return send_file(img_response, mimetype='image/jpeg', as_attachment=as_attachment)
