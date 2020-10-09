@@ -23,15 +23,17 @@ gallery = Blueprint('gallery', __name__, template_folder='templates')
 @gallery.route('/')
 def index():
 	"""
-	главная страница
+	главная страница / фотопоток
 	"""
 	if not CheckUserLogin.check():
 		form = LoginForm()
 		return render_template('login.html', form=form)
 	else:
-		photos = PhotoStream.stream()
+		photos = PhotoStream.stream(int(request.args.get('page', 1)))
 		
-		return render_template('gallery.html', photos=photos)
+		return render_template('gallery.html',
+			photos=photos['photos'],
+		    pages_total=photos['pages_total'])
 
 
 @gallery.route('/login/', methods=['POST'])

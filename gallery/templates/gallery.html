@@ -14,9 +14,9 @@
 
                     <a href="/show-photo/{{ photo._id }}/{{ photo.photos.file }}/">
                         {% if photo.photos.created %}
-                        {% set created = photo.photos.created | my_strftime %}
+                            {% set created = photo.photos.created | my_strftime %}
                         {% else %}
-                        {% set created = '' %}
+                            {% set created = '' %}
                         {% endif %}
                         <figure class="picture glightbox2" data-title="{{ created }}"
                             data-url="/get-photo/{{ photo._id }}/{{ photo.photos.file }}/min/"></figure>
@@ -26,7 +26,21 @@
                 </div>
                 {% endif %}
             </div>
-            <!--=================== masaonry portfolio end====================-->
+
+            <ul class="pagination justify-content-center pt-3">
+                {% for page in range(1, pages_total + 1) %}
+                    {% if page == photos.current_page %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">
+                                {{ page }}
+                            <span class="sr-only">(current)</span>
+                          </span></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="/?page={{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
         </div>
     </div>
 </div>
