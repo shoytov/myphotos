@@ -29,11 +29,13 @@ def index():
 		form = LoginForm()
 		return render_template('login.html', form=form)
 	else:
-		photos = PhotoStream.stream(int(request.args.get('page', 1)))
+		page = int(request.args.get('page', 1))
+		photos = PhotoStream.stream(page)
 		
 		return render_template('gallery.html',
-			photos=photos['photos'],
-		    pages_total=photos['pages_total'])
+		                       photos=photos['photos'],
+		                       pages_total=photos['pages_total'],
+		                       current_page=page)
 
 
 @gallery.route('/login/', methods=['POST'])
@@ -96,10 +98,10 @@ def album(slug: str):
 	form.slug.data = slug
 	
 	return render_template('album.html',
-		album=album.album(),
-		photos=album.photos(request.args.get('page', 1)),
-		devices=album.get_devices(),
-		form=form)
+	                       album=album.album(),
+	                       photos=album.photos(request.args.get('page', 1)),
+	                       devices=album.get_devices(),
+	                       form=form)
 
 
 @gallery.route('/upload-photos/', methods=['POST'])
