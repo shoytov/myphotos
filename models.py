@@ -29,7 +29,7 @@ class User(db.Document, UserMixin):
     @classmethod
     def authenticate(cls, email, password):
         user = cls.objects(email=email).first()
-        
+
         if not bcrypt.verify(password, user.password):
             raise Exception('Invalid password')
         return user

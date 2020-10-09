@@ -30,10 +30,10 @@ def index():
 		return render_template('login.html', form=form)
 	else:
 		photos = PhotoStream.stream()
-
+		
 		return render_template('gallery.html', photos=photos)
-	
-	
+
+
 @gallery.route('/login/', methods=['POST'])
 def login():
 	"""
@@ -46,8 +46,8 @@ def login():
 	else:
 		form = LoginForm(request.form)
 		return render_template('login.html', form=form, message='Неверные данные')
-	
-	
+
+
 @gallery.route('/logout/')
 def logout():
 	"""
@@ -82,8 +82,8 @@ def add_album():
 		created_album = album.add()
 		
 		return redirect(url_for('.album', slug=created_album.slug))
-	
-	
+
+
 @gallery.route('/album/<slug>/')
 def album(slug: str):
 	"""
@@ -92,7 +92,12 @@ def album(slug: str):
 	album = ViewAlbum(slug)
 	form = AddPhotosForm()
 	form.slug.data = slug
-	return render_template('album.html', album=album.album(), devices=album.get_devices(), form=form)
+	
+	return render_template('album.html',
+		album=album.album(),
+		photos=album.photos(request.args.get('page', 1)),
+		devices=album.get_devices(),
+		form=form)
 
 
 @gallery.route('/upload-photos/', methods=['POST'])
@@ -105,7 +110,7 @@ def upload_photos():
 
 
 @gallery.route('/get-photo/<album_id>/<filename>/<file_type>/')
-def get_photo(album_id: str, filename: str, file_type: str='min'):
+def get_photo(album_id: str, filename: str, file_type: str = 'min'):
 	"""
 	вывод файла фотографии
 	"""

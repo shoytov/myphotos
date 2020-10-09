@@ -22,6 +22,8 @@ class Config(object):
     WIDTH = 300  # размер миниатюры картинки
     MAX_WIDTH = 1000  # размер картинки при большом выводе
     ALBUM_COVER = 500  # сторона квадрата обложки альбома
+    
+    IMG_PER_PAGE = 50  # фотографий на странице
 
     SECURITY_PASSWORD_SALT = 'afadfd-sdfsd3432sdfsf-msfgfd2fEFdfds'
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
