@@ -79,15 +79,19 @@
                     {% endif %}
                 </div>
 
-                <div>
+                <ul class="pagination justify-content-center pt-3">
                     {% for page in range(1, photos.pages_total + 1) %}
                         {% if page == photos.current_page %}
-                            <span>{{ page }}</span>
+                            <li class="page-item active" aria-current="page"> 
+                                <span class="page-link">
+                                    {{ page }}
+                                <span class="sr-only">(current)</span>
+                              </span></li>
                         {% else %}
-                            <a href="/album/{{ album.slug }}/?page={{ page }}">{{ page }}</a>
+                            <li class="page-item"><a class="page-link" href="/album/{{ album.slug }}/?page={{ page }}">{{ page }}</a></li>
                         {% endif %}
                     {% endfor %}
-                </div>
+                </ul>
             </div>
 
         </div>

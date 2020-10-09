@@ -2515,10 +2515,12 @@ textarea.form-control {
 
 .element_photo .photo_big{
   text-align: center;
+  color: #000;
 }
 
-.element_photo .photo_big{
-  color: #000;
+.element_photo .photo_big img{
+  
+  width: 100%;
 }
 
 .element_photo .photo_meta a{
@@ -2609,4 +2611,18 @@ textarea.form-control {
   -webkit-transform: translateY(0);
   transform: translateY(0);
   opacity: 1;
+}
+
+.pagination span{
+  font-size: 13px;
+}
+
+.pagination a.page-link{
+  color: #000;
+}
+
+.pagination .page-item.active .page-link{
+  font-weight: 500;
+  background-color: #99896e;
+  border-color: #99896e;
 }
