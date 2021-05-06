@@ -1,21 +1,22 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import logout_user
 
-from gallery.services.check_user_login import CheckUserLogin
-from gallery.services.user_login import UserLogin
-from gallery.services.get_user_albums import GetUserAlbums
 from gallery.services.add_user_album import AddUserAlbum
-from gallery.services.view_album import ViewAlbum
-from gallery.services.upload_photos import UploadPhotos
-from gallery.services.get_photo_file import GetPhotoFile
+from gallery.services.check_user_login import CheckUserLogin
 from gallery.services.delete_album import DeleteAlbum
-from gallery.services.photo_stream import PhotoStream
-from gallery.services.show_photo import ShowPhoto
 from gallery.services.delete_photo import DeletePhoto
+from gallery.services.download_album import DownloadAlbum
 from gallery.services.filter_by_camera import FilterByCamera
 from gallery.services.get_album_cover import GetAlbumCover
-from gallery.services.download_album import DownloadAlbum
+from gallery.services.get_photo_file import GetPhotoFile
+from gallery.services.get_user_albums import GetUserAlbums
+from gallery.services.photo_stream import PhotoStream
+from gallery.services.show_photo import ShowPhoto
+from gallery.services.upload_photos import UploadPhotos
+from gallery.services.user_login import UserLogin
+from gallery.services.view_album import ViewAlbum
 from .forms import LoginForm, AddAlbumForm, AddPhotosForm
+import math
 
 gallery = Blueprint('gallery', __name__, template_folder='templates')
 
@@ -32,10 +33,12 @@ def index():
 		page = int(request.args.get('page', 1))
 		photos = PhotoStream.stream(page)
 		
-		return render_template('gallery.html',
-		                       photos=photos['photos'],
-		                       pages_total=photos['pages_total'],
-		                       current_page=page)
+		return render_template(
+			'gallery.html',
+			photos=photos['photos'],
+			pages_total=photos['pages_total'],
+			current_page=page
+		)
 
 
 @gallery.route('/login/', methods=['POST'])
@@ -97,11 +100,13 @@ def album(slug: str):
 	form = AddPhotosForm()
 	form.slug.data = slug
 	
-	return render_template('album.html',
-	                       album=album.album(),
-	                       photos=album.photos(request.args.get('page', 1)),
-	                       devices=album.get_devices(),
-	                       form=form)
+	return render_template(
+		'album.html',
+		album=album.album(),
+		photos=album.photos(request.args.get('page', 1)),
+		devices=album.get_devices(),
+		form=form
+	)
 
 
 @gallery.route('/upload-photos/', methods=['POST'])

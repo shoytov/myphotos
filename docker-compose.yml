@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+    mongodb:
+        container_name: myphotos_mongodb
+        restart: always
+        image: mongo:latest
+        volumes:
+            - .:/app
+        ports:
+            - "27019:27019"
+        command: --smallfiles --bind_ip_all --port 27019
+    web:
+        container_name: myphotos_web
+        restart: always
+        build: .
+        command: uwsgi --http 0.0.0.0:5002 wsgi.ini
+        volumes:
+            - .:/code
+        ports:
+            - "5002:5002"
+        depends_on:
+            - mongodb

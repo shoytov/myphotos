@@ -1,9 +1,10 @@
-from typing import List
 from math import ceil
+from typing import List
+
 from flask_security import current_user
 
-from models import Album
 from config import Config
+from models import Album
 
 
 class ViewAlbum(object):
